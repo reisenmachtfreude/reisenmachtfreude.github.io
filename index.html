@@ -1,0 +1,118 @@
+
+<!-- saved from url=(0061)https://www.includehelp.com/code-snippets/Demo/Example23.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>JavaScript - Move Object with Arrow Keys using JavaScript Function.</title>
+<script type="text/javascript">
+	var speed = 10;
+			//init object globally
+			var objImage= null;
+			function init(){
+				objImage=document.getElementById("image1");				
+				objImage.style.position='relative';
+				objImage.style.left='0px';
+				objImage.style.top='0px';
+
+				show_image();
+			}
+			function getKeyAndMove(e){				
+				var key_code=e.which||e.keyCode;
+				switch(key_code){
+					case 37: //left arrow key
+						moveLeft();
+						break;
+					case 38: //Up arrow key
+						moveUp();
+						break;
+					case 39: //right arrow key
+						moveRight();
+						break;
+					case 40: //down arrow key
+						moveDown();
+						break;						
+				}
+			}
+
+			function moveLeft(){
+				if (parseInt(objImage.style.left)> 0){
+					objImage.style.left=parseInt(objImage.style.left)- speed +'px';
+					checkCollision()
+				}
+			}
+			function moveUp(){
+				if (parseInt(objImage.style.top)> 0){
+					objImage.style.top=parseInt(objImage.style.top)- speed +'px';
+					checkCollision()
+				}
+			}
+			function moveRight(){
+				if (objImage.style.left=parseInt(objImage.style.left) < document.body.clientWidth){
+					objImage.style.left=parseInt(objImage.style.left)+ speed +'px';
+					checkCollision()
+				}
+			}
+			function moveDown(){
+				if (objImage.style.left=parseInt(objImage.style.top) < document.body.clientHeight){
+					objImage.style.top=parseInt(objImage.style.top)+ speed +'px';
+					checkCollision()
+				}
+			}
+
+			function checkCollision(){
+				obj1 = document.getElementById("image1");
+				obj2 = document.getElementById("image2");
+
+				if (overlaps(obj1, obj2)){
+					obj2 = document.getElementById("image2").remove();
+					show_image();
+				}
+			}
+			window.onload=init;
+
+	// place random fish
+	function show_image() {
+		var img = document.createElement("img");
+		img.src = "./fish2.png";
+		img.width = 200;
+		//img.height = 200;
+		img.alt = "";
+		img.id = "image2"
+
+		// set the position
+		img.style.position = 'absolute';
+		img.style.top = document.body.clientHeight * Math.random() + 'px';
+		img.style.left = document.body.clientWidth * Math.random() + 'px';
+
+		document.body.appendChild(img);
+		}
+
+
+		var overlaps = (function () {
+			function getPositions( elem ) {
+				var pos, width, height;
+				pos = elem
+				width = elem.getBoundingClientRect().width;
+				height = elem.getBoundingClientRect().height;
+				return [ [ pos.x, pos.x + width ], [ pos.y, pos.y + height ] ];
+			}
+
+			function comparePositions( p1, p2 ) {
+				var r1, r2;
+				r1 = p1[0] < p2[0] ? p1 : p2;
+				r2 = p1[0] < p2[0] ? p2 : p1;
+				return r1[1] > r2[0] || r1[0] === r2[0];
+			}
+
+			return function ( a, b ) {
+				var pos1 = getPositions( a ),
+					pos2 = getPositions( b );
+				return comparePositions( pos1[0], pos2[0] ) && comparePositions( pos1[1], pos2[1] );
+			};
+		})();
+
+		</script>
+</head>
+<body onkeydown="getKeyAndMove(event)" style="background-image: url('back.jpg'); background-size: cover;">
+<img id="image1" src="./crab.png" alt="includehelp.com" style="position: relative; left: 1175px; top: 1410px;">
+
+
+</body></html>
