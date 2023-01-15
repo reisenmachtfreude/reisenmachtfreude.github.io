@@ -72,7 +72,11 @@
 	function show_image() {
 		var img = document.createElement("img");
 		img.src = "./fish2.png";
-		img.width = 200;
+		var min = 0.15;
+		var max = 2.0
+		var random_scale = (Math.random() * (max - min)) + min;
+
+		img.width = 200 * random_scale;
 		//img.height = 200;
 		img.alt = "";
 		img.id = "image2"
